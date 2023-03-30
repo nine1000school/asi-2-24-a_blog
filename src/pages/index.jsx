@@ -1,6 +1,6 @@
 import Page from "@/web/components/Page.jsx"
 import PostSummary from "@/web/components/PostSummary.jsx"
-import axios from "axios"
+import api from "@/web/services/api.js"
 import { useEffect, useState } from "react"
 
 const IndexPage = () => {
@@ -10,7 +10,7 @@ const IndexPage = () => {
     ;(async () => {
       const {
         data: { result },
-      } = await axios("http://localhost:4000/posts")
+      } = await api("/posts")
 
       setPosts(result)
     })()
@@ -19,7 +19,7 @@ const IndexPage = () => {
   return (
     <Page className="gap-8">
       {posts.map((post) => (
-        <PostSummary key={post.id} post={post} />
+        <PostSummary key={post._id} post={post} />
       ))}
     </Page>
   )

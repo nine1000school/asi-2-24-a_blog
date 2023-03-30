@@ -1,13 +1,13 @@
 import Loader from "@/web/components/Loader.jsx"
 import Page from "@/web/components/Page.jsx"
 import Post from "@/web/components/Post.jsx"
-import axios from "axios"
+import api from "@/web/services/api.js"
 import { useEffect, useState } from "react"
 
 export const getServerSideProps = ({ params }) => ({
   props: {
     params: {
-      postId: Number.parseInt(params.postId, 10),
+      postId: params.postId,
     },
   },
 })
@@ -20,7 +20,7 @@ const PostPage = (props) => {
     ;(async () => {
       const {
         data: { result },
-      } = await axios(`http://localhost:4000/posts/${postId}`)
+      } = await api(`/posts/${postId}`)
 
       setPost(result)
     })()

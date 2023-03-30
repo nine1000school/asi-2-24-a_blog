@@ -2,25 +2,30 @@ import Link from "@/web/components/Link.jsx"
 import clsx from "clsx"
 
 const Page = (props) => {
-  const { children, className } = props
+  const { children, className, title } = props
 
   return (
-    <main className="flex flex-col">
-      <header className="sticky top-0 flex justify-between border-b bg-white p-2">
-        <Link href="/">A dev's blog</Link>
-        <nav>
-          <ul className="flex items-center gap-4">
-            <li>
-              <Link href="/sign-in">Sign in</Link>
-            </li>
-            <li>
-              <Link href="/sign-up">Sign up</Link>
-            </li>
-          </ul>
-        </nav>
+    <main className="flex min-h-screen flex-col">
+      <header className="sticky top-0 border-b border-neutral-300 bg-white">
+        <div className="mx-auto flex max-w-3xl justify-between p-2">
+          <Link href="/">A dev's blog</Link>
+          <nav>
+            <ul className="flex items-center gap-4">
+              <li>
+                <Link href="/sign-in">Sign in</Link>
+              </li>
+              <li>
+                <Link href="/sign-up">Sign up</Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </header>
-      <section className={clsx("flex flex-col p-4", className)}>
-        {children}
+      <section className="grow">
+        <div className={clsx("mx-auto flex max-w-3xl flex-col p-2", className)}>
+          {title && <h1 className="py-4 text-2xl font-semibold">{title}</h1>}
+          {children}
+        </div>
       </section>
     </main>
   )
