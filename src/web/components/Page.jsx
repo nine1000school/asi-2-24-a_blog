@@ -1,8 +1,14 @@
+import { useAppContext } from "@/web/components/AppContext.jsx"
+import Button from "@/web/components/Button.jsx"
 import Link from "@/web/components/Link.jsx"
 import clsx from "clsx"
 
 const Page = (props) => {
   const { children, className, title } = props
+  const {
+    state: { session },
+    actions: { signOut },
+  } = useAppContext()
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -11,12 +17,22 @@ const Page = (props) => {
           <Link href="/">A dev's blog</Link>
           <nav>
             <ul className="flex items-center gap-4">
-              <li>
-                <Link href="/sign-in">Sign in</Link>
-              </li>
-              <li>
-                <Link href="/sign-up">Sign up</Link>
-              </li>
+              {session ? (
+                <>
+                  <li>
+                    <Button onClick={signOut}>Sign out</Button>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <Link href="/sign-in">Sign in</Link>
+                  </li>
+                  <li>
+                    <Link href="/sign-up">Sign up</Link>
+                  </li>
+                </>
+              )}
             </ul>
           </nav>
         </div>

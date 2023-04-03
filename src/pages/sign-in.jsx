@@ -7,60 +7,37 @@ import { useRouter } from "next/router.js"
 import * as yup from "yup"
 
 const initialValues = {
-  firstName: "",
-  lastName: "",
   email: "",
   password: "",
 }
 
 const validationSchema = yup.object().shape({
-  firstName: yup.string().trim().required().label("First name"),
-  lastName: yup.string().trim().required().label("Last name"),
   email: yup.string().email().required().label("E-mail"),
-  password: yup
-    .string()
-    .min(8)
-    .matches(/^.*(?=.*[0-9]+).*$/, "Password must contain a number")
-    .matches(
-      /^.*(?=.*\p{Ll}+).*$/u,
-      "Password must contain a lower case letter"
-    )
-    .matches(
-      /^.*(?=.*\p{Lu}+).*$/u,
-      "Password must contain a upper case letter"
-    )
-    .matches(
-      /^.*(?=.*[^0-9\p{L}]+).*$/u,
-      "Password must contain a special character"
-    )
-    .required()
-    .label("Password"),
+  password: yup.string().required().label("Password"),
 })
 
-const SignUpPage = () => {
+const SignInPage = () => {
   const {
-    actions: { signUp },
+    actions: { signIn },
   } = useAppContext()
   const router = useRouter()
   const handleSubmit = async (values) => {
     try {
-      await signUp(values)
+      await signIn(values)
 
-      router.push("/sign-in")
+      router.push("/")
     } catch (err) {
       // TODO handle error
     }
   }
 
   return (
-    <Page title="Sign Up">
+    <Page title="Sign In">
       <Form
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        <FormField name="firstName" label="First name" />
-        <FormField name="lastName" label="Last name" />
         <FormField name="email" label="E-mail" type="email" />
         <FormField name="password" label="Password" type="password" />
         <Button type="submit" className="mt-4">
@@ -71,4 +48,4 @@ const SignUpPage = () => {
   )
 }
 
-export default SignUpPage
+export default SignInPage
